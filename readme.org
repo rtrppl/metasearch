@@ -1,0 +1,97 @@
+#+title: Metasearch.el
+
+*Metasearch.el* allows to simultaneously use the same search string in multiple search engines. I define search engine in this context as a website that executes a search when passed the correct URL. Depending on your browser configuration, for each of these websites either a new tab or a new window is opened (using =open= and an URL). Search engines can be organized and called in sets.
+
+** Change log
+
+*0.1*
+- first public version
+
+** Installation
+
+Clone the repository:
+
+=git clone https://github.com/rtrppl/metasearch=
+
+To run Metasearch, you need to load the package by adding it to your .emacs or init.el:
+
+#+begin_src elisp
+(load "/path/to/metasearch/metasearch.el") 
+#+end_src
+
+You should set a binding to =metasearch-search-set=. All my search and dictionary bindings start with "C-c d", hence my choice below.
+
+#+begin_src elisp
+(global-set-key (kbd "C-c d m") 'metasearch-search-set)
+#+end_src
+
+Or, if you use straight:
+
+#+begin_src elisp
+(use-package metasearch
+  :straight (:host github :repo "rtrppl/metasearch")
+  :bind
+  (:map global-map)
+  ("C-c d m" . metasearch-search-set))
+#+end_src
+
+** Functions
+
+These are the primary functions of Metasearch.el:
+
+=metasearch-add-search-engine= and =metasearch-remove-search-engine= will, as their name implies, add and remove search engines from a list stored in =~/.metasearch-search-engine-list=, a local JSON file. 
+
+The same file is used to store information about search sets. A set is a user-created group of different search engines. For example, I have a set called "Locations" that includes "Accuweather, Apple Maps Beta, Bing Maps, Google Maps, OSM, Reddit, Tiktok, Tiktok via Google, Wikipedia EN, Youtube", which gives me a pretty good understanding of a location. Modify or create search sets with =metasearch-modify-set= (see the screenshot below). When a set is empty, it is removed.
+
+#+BEGIN_HTML
+<img src="/modify_set.png" alt="Modifing the search set &quot;Locations&quot;">
+#+END_HTML
+
+=metasearch-search-set= will allow you to pick a set for any search. =metasearch-search-all= will use all available search engines for a search. If a region is active, it will be used as the search query, otherwise a search query is needed. 
+
+** Common search URLs
+
+As you need to manually add search engines to Metasearch, here are the URLs for some common search engines to get you started:
+
+*** Search Engines
+- Baidu: https://www.baidu.com/s?wd=
+- Baidu Baike: https://baike.baidu.com/item/
+- Baike via Baidu: https://www.baidu.com/s?wd=site:baike.baidu.com+
+- Bing: https://www.bing.com/search?q=
+- Brave: https://search.brave.com/search?q=
+- Google: https://www.google.com/search?q=
+- FastGPT: https://kagi.com/fastgpt?query=
+
+*** Locations
+- Google Maps: http://maps.google.com/maps?q=
+- OSM: https://www.openstreetmap.org/search?query=
+- Apple Maps Beta: http://beta.maps.apple.com/?q=
+- Bing Maps: https://maps.bing.com/search?q=
+- Accuweather: https://www.accuweather.com/en/search-locations?query=
+
+*** Coding 
+- Github: https://github.com/search?q=
+- Stack Overflow: https://stackoverflow.com/search?q=
+
+*** Social
+- BlueSky: https://bsky.app/search?q=
+- LinkedIn: https://www.google.com/search?q=site:linkedin.com+
+- Reddit: https://www.reddit.com/search/?q=
+- Youtube: https://www.youtube.com/results?search_query=
+- Twitter/X: https://x.com/search?q= 
+- TikTok via Google: https://www.google.com/search?q=site:tiktok.com+
+- Tiktok: https://www.tiktok.com/search?q=
+
+*** Shopping
+- Amazon: https://www.amazon.de/s?k=
+- Wirecutter: https://www.nytimes.com/wirecutter/search/?s=
+- Idealo: https://www.idealo.de/preisvergleich/MainSearchProductCategory.html?q=
+- Check24: https://www.check24.de/suche/?q=
+- The Verge: https://www.theverge.com/search?q=
+
+*** News 
+- Bing News: https://www.bing.com/news/search?q=
+- Google News https://news.google.com/search?q= 
+- NYTimes: https://www.nytimes.com/search?dropmab=false&lang=en&sort=newest&query=
+- 人民网: http://search.people.cn/s?keyword=
+- CNN: https://edition.cnn.com/search?q=
