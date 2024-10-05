@@ -1,5 +1,9 @@
 #+title: Metasearch.el
 
+#+BEGIN_HTML
+<img src="/metasearch.gif" alt="Metasearch in action">
+#+END_HTML
+
 *Metasearch.el* allows to simultaneously use the same search string in multiple search engines. I define search engine in this context as a website that executes a search when passed the correct URL. Depending on your browser configuration, for each of these websites either a new tab or a new window is opened (using =open= and an URL). Search engines can be organized and called in sets.
 
 ** Change log
@@ -41,7 +45,7 @@ These are the primary functions of Metasearch.el:
 
 =metasearch-add-search-engine= and =metasearch-remove-search-engine= will, as their name implies, add and remove search engines from a list stored in =~/.metasearch-search-engine-list=, a local JSON file. 
 
-The same file is used to store information about search sets. A set is a user-created group of different search engines. For example, I have a set called "Locations" that includes "Accuweather, Apple Maps Beta, Bing Maps, Google Maps, OSM, Reddit, Tiktok, Tiktok via Google, Wikipedia EN, Youtube", which gives me a pretty good understanding of a location. Modify or create search sets with =metasearch-modify-set= (see the screenshot below). When a set is empty, it is removed.
+The same file is used to store information about search sets. A set is a user-created group of different search engines. For example, I have a set called "Locations" that includes "Accuweather, Apple Maps Beta, Bing Maps, Google Maps, OSM, Pinboard, Reddit, Tiktok, Tiktok via Google, Wikipedia EN, Youtube", which gives me a pretty good understanding of a location. Modify or create search sets with =metasearch-modify-set= (see the screenshot below). When a set is empty, it is removed.
 
 #+BEGIN_HTML
 <img src="/modify_set.png" alt="Modifing the search set &quot;Locations&quot;">
