@@ -29,6 +29,16 @@ You should set a binding to =metasearch-search-set=. All my search and dictionar
 (global-set-key (kbd "C-c d m") 'metasearch-search-set)
 #+end_src
 
+If you want to have add a binding to a common search set, you could use this template:
+
+#+begin_src elisp
+(defun metasearch-search ()
+  (interactive)
+  (metasearch-search-set "Locations"))
+(global-set-key (kbd "C-c d M") 'metasearch-search)
+#+end_src
+
+
 Or, if you use straight:
 
 #+begin_src elisp

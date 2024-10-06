@@ -219,7 +219,7 @@ metasearch-list-search-engines))))
 	  (setq search-cmd (shell-quote-argument search-cmd))
 	  (shell-command (concat "open " search-cmd)))))))
 
-(defun metasearch-search-set ()
+(defun metasearch-search-set (&optional set)
   "Starts a search with a search set."
   (interactive)
   (let ((metasearch-file-exists (metasearch-check-for-search-engine-file)))
@@ -233,9 +233,12 @@ metasearch-list-search-engines))))
 	     (matched-search-engines)
 	     (search-query)
 	     (search-cmd))
-	(setq search-sets (remove "main" search-sets)) ;; "main" should not be an option here.
-	(sort search-sets 'string<)
-	(setq selected-set (completing-read "Chose a search set: " (metasearch-presorted-completion-table search-sets)))
+	(when (not set)
+	  (setq search-sets (remove "main" search-sets)) ;; "main" should not be an option here.
+	  (sort search-sets 'string<)
+	  (setq selected-set (completing-read "Chose a search set: " (metasearch-presorted-completion-table search-sets))))
+	(when set
+	  (setq selected-set set))
 	(if (region-active-p)
 	    (setq search-query (buffer-substring-no-properties (region-beginning)(region-end)))
 	  (setq search-query (read-from-minibuffer "Search: ")))
