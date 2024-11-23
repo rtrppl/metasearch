@@ -38,7 +38,7 @@
   (defvar open-cmd "open"))
 
 (when (eq system-type 'gnu/linux)
-  (defvar open-cmd "xdg-open"))
+  (defvar open-cmd "xdg-open 2>/dev/null"))
 
 (defun metasearch-add-search-engine ()
   "Adds a search engine to the list of search engines."
@@ -229,7 +229,7 @@ metasearch-list-search-engines))))
 	(dolist (search-engine search-engines)
 	  (setq search-cmd (concat search-engine search-query))
 	  (setq search-cmd (shell-quote-argument search-cmd))
-	  (start-process-shell-command "metasearch.el" nil (concat open-cmd " " search-cmd)))))))
+	  (shell-command (concat open-cmd " " search-cmd)))))))
 
 (defun metasearch-search-set (&optional set query)
   "Starts a search with a search set."
@@ -262,7 +262,7 @@ metasearch-list-search-engines))))
 	   (dolist (item matched-search-engines)
 	     (setq search-cmd (concat item search-query))
 	     (setq search-cmd (shell-quote-argument search-cmd))
-	     (start-process-shell-command "metasearch.el" nil (concat open-cmd " " search-cmd))))
+	     (shell-command (concat open-cmd " " search-cmd))))
 	(when (not (member selected-set search-sets))
 	  (message "This search set does not exist."))))))
 
