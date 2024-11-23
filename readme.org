@@ -4,9 +4,15 @@
 <img src="/metasearch.gif" alt="Metasearch in action">
 #+END_HTML
 
-*Metasearch.el* allows to simultaneously use the same search string in multiple search engines. I define search engine in this context as a website that executes a search when passed the correct URL. Depending on your browser configuration, for each of these websites either a new tab or a new window is opened (using =open= and an URL). Search engines can be organized and called in sets.
+*Metasearch.el* allows to simultaneously use the same search string in multiple search engines (see also [[https://en.wikipedia.org/wiki/Metasearch_engine][Metasearch engine - Wikipedia]]). I define search engine in this context as a website that executes a search when passed the correct URL. Depending on your browser configuration, for each of these websites either a new tab or a new window is opened (using =open= and an URL). Search engines can be organized and called in sets.
 
 ** Change log
+
+*0.1.2*
+- Fix for Linux, which uses xdg-open
+
+*0.1.1*
+- Includes a small fix for "Trailing garbage following expression" bug
 
 *0.1*
 - first public version
@@ -75,6 +81,7 @@ As you need to manually add search engines to Metasearch, here are the URLs for 
 - Brave: https://search.brave.com/search?q=
 - Google: https://www.google.com/search?q=
 - FastGPT: https://kagi.com/fastgpt?query=
+- WeChat via Baidu: https://www.baidu.com/s?wd=site:qq.com+
 
 *** Locations
 - Google Maps: http://maps.google.com/maps?q=
@@ -89,10 +96,12 @@ As you need to manually add search engines to Metasearch, here are the URLs for 
 
 *** Social
 - BlueSky: https://bsky.app/search?q=
-- LinkedIn: https://www.google.com/search?q=site:linkedin.com+
+- LinkedIn via Google: https://www.google.com/search?q=site:linkedin.com+
+- LinkedIn via Bing: https://www.bing.com/search?q=site:linkedin.com+
 - Reddit: https://www.reddit.com/search/?q=
 - Youtube: https://www.youtube.com/results?search_query=
 - Twitter/X: https://x.com/search?q= 
+- Telegram via Google: https://www.google.com/search?q=site:telegram.me+
 - TikTok via Google: https://www.google.com/search?q=site:tiktok.com+
 - Tiktok: https://www.tiktok.com/search?q=
 
@@ -109,3 +118,6 @@ As you need to manually add search engines to Metasearch, here are the URLs for 
 - NYTimes: https://www.nytimes.com/search?dropmab=false&lang=en&sort=newest&query=
 - 人民网: http://search.people.cn/s?keyword=
 - CNN: https://edition.cnn.com/search?q=
+
+*** Other
+- Google Scholar: https://scholar.google.com/scholar?hl=en&q=

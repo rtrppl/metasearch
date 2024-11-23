@@ -4,7 +4,7 @@
 
 ;; Maintainer: René Trappel <rtrappel@gmail.com>
 ;; URL:
-;; Version: 0.1
+;; Version: 0.1.2
 ;; Package-Requires: emacs "26"
 ;; Keywords: search web
 
@@ -27,12 +27,24 @@
 
 ;; A package to quickly start a search on one search querry on multiple 
 ;; search engines.
+;;
+;; 0.1.2
+;; - Fix for Linux, which uses xdg-open
+;;
+;; 0.1.1
+;; - Includes a small fix for "Trailing garbage following expression" bug
+
+(when (eq system-type 'darwin)
+  (defvar open-cmd "open"))
+
+(when (eq system-type 'gnu/linux)
+  (defvar open-cmd "xdg-open"))
 
 (defun metasearch-add-search-engine ()
   "Adds a search engine to the list of search engines."
   (interactive)
   (let* ((metasearch-list-search-engines (metasearch-get-list-of-search-engines))
-	 (new-search-engine (read-minibuffer "Enter a search engine query URL: "))
+	 (new-search-engine (read-from-minibuffer "Enter a search engine query URL: "))
 	 (name (read-from-minibuffer "Please provide a name for the new search engine: "))
 	 (name (replace-regexp-in-string "[\"'?:;\\\/]" "_" name)))
     (when (not metasearch-list-search-engines)
@@ -217,7 +229,7 @@ metasearch-list-search-engines))))
 	(dolist (search-engine search-engines)
 	  (setq search-cmd (concat search-engine search-query))
 	  (setq search-cmd (shell-quote-argument search-cmd))
-	  (shell-command (concat "open " search-cmd)))))))
+	  (shell-command (concat open-cmd " " search-cmd)))))))
 
 (defun metasearch-search-set (&optional set query)
   "Starts a search with a search set."
@@ -250,7 +262,7 @@ metasearch-list-search-engines))))
 	   (dolist (item matched-search-engines)
 	     (setq search-cmd (concat item search-query))
 	     (setq search-cmd (shell-quote-argument search-cmd))
-	     (shell-command (concat "open " search-cmd))))
+	     (shell-command (concat open-cmd " " search-cmd))))
 	(when (not (member selected-set search-sets))
 	  (message "This search set does not exist."))))))
 
