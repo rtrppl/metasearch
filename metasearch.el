@@ -38,7 +38,7 @@
   (defvar open-cmd "open"))
 
 (when (eq system-type 'gnu/linux)
-  (defvar open-cmd "xdg-open"))
+  (defvar open-cmd "xdg-open 2>/dev/null"))
 
 (defun metasearch-add-search-engine ()
   "Adds a search engine to the list of search engines."
