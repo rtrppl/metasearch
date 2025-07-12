@@ -4,7 +4,7 @@
 
 ;; Maintainer: René Trappel <rtrappel@gmail.com>
 ;; URL:
-;; Version: 0.1.2
+;; Version: 0.1.3
 ;; Package-Requires: emacs "26"
 ;; Keywords: search web
 
@@ -28,11 +28,16 @@
 ;; A package to quickly start a search on one search querry on multiple 
 ;; search engines.
 ;;
+;; 0.1.3
+;; - Fix for `add-to-list'
+;;
 ;; 0.1.2
 ;; - Fix for Linux, which uses xdg-open
 ;;
 ;; 0.1.1
 ;; - Includes a small fix for "Trailing garbage following expression" bug
+
+(require 'json)   ; For json-encode
 
 (when (eq system-type 'darwin)
   (defvar open-cmd "open"))
@@ -114,7 +119,7 @@
 	(results))
     (dolist (item search-engines)
       (if (string-match-p (concat "::" set-name "::") item)
-	  (add-to-list 'results item)))
+	  (push item results)))
     (setq results (metasearch-pure-list results))
     results))
 
@@ -143,7 +148,7 @@ list-completion))
 	 (goto-char (point-min))
 	 (while (and (re-search-forward "::\\(.*?\\)\\::" nil t)
 		     (not (string-empty-p (match-string 1))))
-	   (add-to-list 'search-sets (match-string 1)))))
+	   (push (match-string 1) search-sets))))
      search-sets))
 
 (defun metasearch-remove-search-engine ()
@@ -273,7 +278,7 @@ metasearch-list-search-engines))))
 	(results))
     (dolist (item search-engines)
       (when (string-match-p (concat "::" set "::") item)
-	(add-to-list 'results (gethash item metasearch-list-search-engines))))
+	(push (gethash item metasearch-list-search-engines) results)))
     results))
 
 (provide 'metasearch)
