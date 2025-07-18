@@ -28,6 +28,9 @@
 ;; A package to quickly start a search on one search querry on multiple 
 ;; search engines.
 ;;
+;; 0.1.4
+;; - Fix for Windows
+;;
 ;; 0.1.3
 ;; - Fix for `add-to-list'
 ;;
@@ -44,6 +47,9 @@
 
 (when (eq system-type 'gnu/linux)
   (defvar open-cmd "xdg-open 2>/dev/null"))
+
+(when (eq system-type 'windows-nt)
+  (defvar open-cmd "start"))
 
 (defun metasearch-add-search-engine ()
   "Adds a search engine to the list of search engines."
