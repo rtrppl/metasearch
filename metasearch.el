@@ -49,7 +49,7 @@
   (defvar open-cmd "xdg-open 2>/dev/null"))
 
 (when (eq system-type 'windows-nt)
-  (defvar open-cmd "cmd.exe start \"\""))
+  (defvar open-cmd "explorer"))
 
 (defun metasearch-add-search-engine ()
   "Adds a search engine to the list of search engines."
@@ -239,7 +239,8 @@ metasearch-list-search-engines))))
 	  (setq search-query (read-from-minibuffer "Search: ")))
 	(dolist (search-engine search-engines)
 	  (setq search-cmd (concat search-engine search-query))
-	  (setq search-cmd (shell-quote-argument search-cmd))
+	  (when (not (eq system-type 'windows-nt)) 
+	    (setq search-cmd (shell-quote-argument search-cmd)))
 	  (shell-command (concat open-cmd " " search-cmd)))))))
 
 (defun metasearch-search-set (&optional set query)
@@ -272,7 +273,8 @@ metasearch-list-search-engines))))
 	  (setq matched-search-engines (metasearch-return-search-engines-for-set selected-set))
 	   (dolist (item matched-search-engines)
 	     (setq search-cmd (concat item search-query))
-	     (setq search-cmd (shell-quote-argument search-cmd))
+	     (when (not (eq system-type 'windows-nt))
+	       (setq search-cmd (shell-quote-argument search-cmd)))
 	     (shell-command (concat open-cmd " " search-cmd))))
 	(when (not (member selected-set search-sets))
 	  (message "This search set does not exist."))))))
