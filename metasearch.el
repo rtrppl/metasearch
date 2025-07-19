@@ -49,7 +49,7 @@
   (defvar open-cmd "xdg-open 2>/dev/null"))
 
 (when (eq system-type 'windows-nt)
-  (defvar open-cmd "powershell.exe Start-Process"))
+  (defvar open-cmd "cmd.exe start \"\""))
 
 (defun metasearch-add-search-engine ()
   "Adds a search engine to the list of search engines."

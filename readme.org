@@ -8,8 +8,14 @@
 
 ** Change log
 
+*0.1.4*
+- Fix for Windows, which uses ~cmd.exe start ""~
+
+*0.1.3*
+- Fix for `add-to-list'
+
 *0.1.2*
-- Fix for Linux, which uses xdg-open
+- Fix for Linux, which uses ~xdg-open~
 
 *0.1.1*
 - Includes a small fix for "Trailing garbage following expression" bug
@@ -32,7 +38,7 @@ To run Metasearch, you need to load the package by adding it to your .emacs or i
 You should set a binding to =metasearch-search-set=. All my search and dictionary bindings start with "C-c d", hence my choice below.
 
 #+begin_src elisp
-(global-set-key (kbd "C-c d m") 'metasearch-search-set)
+(global-set-key (kbd "C-c d M") 'metasearch-search-set)
 #+end_src
 
 If you want to add a binding to a specific search set, you could use this template:
@@ -40,8 +46,8 @@ If you want to add a binding to a specific search set, you could use this templa
 #+begin_src elisp
 (defun metasearch-search ()
   (interactive)
-  (metasearch-search-set "Locations"))
-(global-set-key (kbd "C-c d M") 'metasearch-search)
+  (metasearch-search-set "Search"))
+(global-set-key (kbd "C-c d m") 'metasearch-search)
 #+end_src
 
 
@@ -52,7 +58,7 @@ Or, if you use straight:
   :straight (:host github :repo "rtrppl/metasearch")
   :bind
   (:map global-map)
-  ("C-c d m" . metasearch-search-set))
+  ("C-c d M" . metasearch-search-set))
 #+end_src
 
 ** Functions
@@ -81,7 +87,6 @@ As you need to manually add search engines to Metasearch, here are the URLs for 
 - Brave: https://search.brave.com/search?q=
 - Google: https://www.google.com/search?q=
 - FastGPT: https://kagi.com/fastgpt?query=
-- WeChat via Baidu: https://www.baidu.com/s?wd=site:qq.com+
 
 *** Locations
 - Google Maps: http://maps.google.com/maps?q=
@@ -104,12 +109,13 @@ As you need to manually add search engines to Metasearch, here are the URLs for 
 - Telegram via Google: https://www.google.com/search?q=site:telegram.me+
 - TikTok via Google: https://www.google.com/search?q=site:tiktok.com+
 - Tiktok: https://www.tiktok.com/search?q=
+- Douyin: https://www.douyin.com/search/
+- WeChat via Baidu: https://www.baidu.com/s?wd=site:qq.com+
 
 *** Shopping
 - Amazon: https://www.amazon.de/s?k=
 - Wirecutter: https://www.nytimes.com/wirecutter/search/?s=
 - Idealo: https://www.idealo.de/preisvergleich/MainSearchProductCategory.html?q=
-- Check24: https://www.check24.de/suche/?q=
 - The Verge: https://www.theverge.com/search?q=
 
 *** News 
