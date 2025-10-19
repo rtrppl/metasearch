@@ -4,7 +4,7 @@
 
 ;; Maintainer: René Trappel <rtrappel@gmail.com>
 ;; URL:
-;; Version: 0.1.3
+;; Version: 0.1.4
 ;; Package-Requires: emacs "26"
 ;; Keywords: search web
 
@@ -28,6 +28,9 @@
 ;; A package to quickly start a search on one search querry on multiple 
 ;; search engines.
 ;;
+;; 0.1.5
+;; - Added configurable config file location.
+;;
 ;; 0.1.4
 ;; - Fix for Windows
 ;;
@@ -41,6 +44,8 @@
 ;; - Includes a small fix for "Trailing garbage following expression" bug
 
 (require 'json)   ; For json-encode
+
+(defvar metasearch-dotfile "~/.metasearch-search-engine-list")
 
 (when (eq system-type 'darwin)
   (defvar open-cmd "open"))
@@ -64,7 +69,7 @@
     (with-temp-buffer
       (let* ((json-data (json-encode metasearch-list-search-engines)))
 	(insert json-data)
-	(write-file "~/.metasearch-search-engine-list")))))
+	(write-file metasearch-dotfile)))))
 
 (defun metasearch-modify-set ()
  "Adds or removes a search engine to a search set."
@@ -107,7 +112,7 @@
  (let ((metasearch-list-search-engines (make-hash-table :test 'equal))
        (value))
    (with-temp-buffer
-     (insert-file-contents "~/.metasearch-search-engine-list")
+     (insert-file-contents metasearch-dotfile)
      (if (fboundp 'json-parse-buffer)
 	 (setq metasearch-list-search-engines (json-parse-buffer))))
    (setq value (gethash existing-key metasearch-list-search-engines))
@@ -116,7 +121,7 @@
    (with-temp-buffer
      (let* ((json-data (json-encode metasearch-list-search-engines)))
        (insert json-data)
-       (write-file "~/.metasearch-search-engine-list")))))
+       (write-file metasearch-dotfile)))))
 
 (defun metasearch-return-set-search-engines (set-name)
  "Returns all search-engines for search set."
@@ -176,7 +181,7 @@ list-completion))
 	    (with-temp-buffer
 	      (setq json-data (json-encode metasearch-list-search-engines))
 	      (insert json-data)
-	      (write-file "~/.metasearch-search-engine-list")))))))
+	      (write-file metasearch-dotfile)))))))
 
 (defun metasearch-pure-list (search-engines)
   "Create a list of search engines without sets."
@@ -202,7 +207,7 @@ list-completion))
    (when metasearch-file-exists
      (let ((metasearch-list-search-engines (make-hash-table :test 'equal)))
        (with-temp-buffer
-	 (insert-file-contents "~/.metasearch-search-engine-list")
+	 (insert-file-contents metasearch-dotfile)
 	 (if (fboundp 'json-parse-buffer)
 	     (setq metasearch-list-search-engines (json-parse-buffer))))
 metasearch-list-search-engines))))
@@ -213,9 +218,9 @@ metasearch-list-search-engines))))
   (let ((metasearch-file-exists nil)
 	(metasearch-list-search-engines (make-hash-table :test 'equal))
 	(length-of-list))
-  (when (file-exists-p "~/.metasearch-search-engine-list")
+  (when (file-exists-p metasearch-dotfile)
     (with-temp-buffer
-	 (insert-file-contents "~/.metasearch-search-engine-list")
+	 (insert-file-contents metasearch-dotfile)
 	 (if (fboundp 'json-parse-buffer)
 	     (setq metasearch-list-search-engines (json-parse-buffer)))
 	 (setq length-of-list (length (hash-table-values metasearch-list-search-engines)))
@@ -294,3 +299,5 @@ metasearch-list-search-engines))))
     results))
 
 (provide 'metasearch)
+
+;;; metasearch.el ends here

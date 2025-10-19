@@ -8,6 +8,9 @@
 
 ** Change log
 
+*0.1.5*
+- Added configurable config file location.
+
 *0.1.4*
 - Fix for Windows, which uses ~cmd.exe start ""~
 
